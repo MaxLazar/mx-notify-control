@@ -166,10 +166,8 @@ array("file" => "mx_notify_control")
 
 					if (trigger == "9" || trigger == "10")
 					{
-;
 						jQuery("#auth_event_"+row).fadeIn();
 					} else {
-
 						jQuery("#auth_event_"+row).fadeOut();
 					}
 
@@ -204,8 +202,9 @@ array("file" => "mx_notify_control")
 					}
 				});
 
-				$(".line_toggle").data("visible", true); // set initial state 
-				$(".line_toggle").click();
+				$(".line_toggle").each(function(){
+					$(this).data("visible", true).click(); // set initial state 
+				});
 
 			});
 
