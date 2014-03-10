@@ -176,8 +176,38 @@ array("file" => "mx_notify_control")
 
 				});
 
+				jQuery(".line_toggle").click(function(event)
+				{
+					var what, button;
+					var id = $(this).data("id");
+					var visible = $(this).data("visible");
 
-			})
+					// toggle visible and store
+					visible = ! visible;
+					$(this).data("visible", visible);
+
+					// toggle all
+					if (event.altKey){
+						what = "tbody[class^=event_] td";
+						button = ".line_toggle";
+					}else{
+						what = "tbody.event_"+id+" td";
+						button = this;
+					}
+
+					if(visible){
+						$(button).html("&#9654;") // ▶ &#9654;
+						$(what).hide();
+					}else{
+						$(button).html("&#9660;") // ▼ &#9660;
+						$(what).show();
+					}
+				});
+
+				$(".line_toggle").data("visible", true); // set initial state 
+				$(".line_toggle").click();
+
+			});
 
 			function delete_line (row_id){
 				jQuery(".event_" +row_id).remove();
@@ -207,8 +237,11 @@ function table_notify($input_prefix, $row_ids,$row_id, $template_list, $settings
 $out = '
 <tbody class="event_'.$row_ids.'">
 <tr class="header">
-<th><span class="trigger_title" rel="'.$row_id.'"  id="trigger_title_'.$row_ids.'">'.((isset($settings['trigger_name_'.$row_id])) ? ((trim($settings['trigger_name_'.$row_id]) != "") ? $settings['trigger_name_'.$row_id] : lang('message').$row_ids) : lang('message').$row_ids).' </span><input name="'.$input_prefix.'[row_order][]"  value="'.$row_ids.'" type="hidden"/><input dir="ltr" style="width: 100%;display:none;" name="'.$input_prefix.'[trigger_name_'.$row_ids.']" id="trigger_name_'.$row_ids.'" value ="'.((isset($settings['trigger_name_'.$row_id])) ? $settings['trigger_name_'.$row_id]: '').'" size="20" maxlength="120"  class="name_input" type="text" rel="'.$row_id.'"><span></th>
-<th><div style="width: 100%;"><span style="float: right;" OnClick="delete_line('.$row_ids.');">
+<th class="no-sort">
+  <span class="line_toggle" data-id="'.$row_ids.'" style="display:inline-block;padding:5px;margin:-5px 6px;cursor:pointer;float:left;">&#9654;</span>
+  <span class="trigger_title" rel="'.$row_id.'"  id="trigger_title_'.$row_ids.'">'.((isset($settings['trigger_name_'.$row_id])) ? ((trim($settings['trigger_name_'.$row_id]) != "") ? $settings['trigger_name_'.$row_id] : lang('message').$row_ids) : lang('message').$row_ids).' </span><input name="'.$input_prefix.'[row_order][]"  value="'.$row_ids.'" type="hidden"/><input dir="ltr" style="width: 100%;display:none;" name="'.$input_prefix.'[trigger_name_'.$row_ids.']" id="trigger_name_'.$row_ids.'" value ="'.((isset($settings['trigger_name_'.$row_id])) ? $settings['trigger_name_'.$row_id]: '').'" size="20" maxlength="120"  class="name_input" type="text" rel="'.$row_id.'"><span>
+</th>
+<th class="no-sort"><div style="width: 100%;"><span style="float: right;" OnClick="delete_line('.$row_ids.');">
 <input  value="'.lang('delete_rule').'" class="submit" type="button"></span></div></th>
 </tr>
 <tr class="even">
@@ -281,8 +314,8 @@ $out = '
 	<td class="tableCellOne">
 	<table class="padTable" id="channels_table_'.$row_ids.'" border="0" cellpadding="0" cellspacing="0">
 	<tr class="header">
-	<th>'.lang('channel').'</th>
-	<th>'.lang('statuses').'</th>
+	<th class="no-sort">'.lang('channel').'</th>
+	<th class="no-sort">'.lang('statuses').'</th>
 	</tr>
 
 
