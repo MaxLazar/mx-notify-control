@@ -63,9 +63,9 @@ class Mx_notify_control_ext
 	{
 		$this->EE =& get_instance();
 
-		if (!class_exists('EE_Template'))
-		{
-			require APPPATH . 'libraries/Template' . EXT;
+		if ( ! isset($this->EE->TMPL)){
+			$this->EE->load->library('template');
+			$this->EE->TMPL = new EE_Template();
 		}
 
 
@@ -1064,6 +1064,9 @@ class Mx_notify_control_ext
 	 */
 	function template_parser($msg_data, $iRow, $template)
 	{
+		$OLD_TMPL = isset($this->EE->TMPL) ? $this->EE->TMPL : NULL;
+		$this->EE->TMPL = new EE_Template();
+
 		$msg_body = $this->message_body($template);
 
 		$msg_body = $this->templater($msg_body, $msg_data);
@@ -1082,6 +1085,9 @@ class Mx_notify_control_ext
 		$this->EE->TMPL->parse($msg_body, FALSE, SITE_ID);
 
 		$msg_body = $this->EE->TMPL->parse_globals($this->EE->TMPL->final_template);
+
+		// restore TMPL pointer
+		$this->EE->TMPL = $OLD_TMPL;
 
 		return $msg_body;
 	}
