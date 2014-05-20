@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( !defined( 'BASEPATH' ) ) exit( 'No direct script access allowed' );
 
 class Mx_delegate_email_ft extends EE_Fieldtype
 {
@@ -11,18 +11,15 @@ class Mx_delegate_email_ft extends EE_Fieldtype
 	var $prefix = 'delegate_email_';
 
 
-	function Mx_delegate_email_ft()
-	{
-		parent::EE_Fieldtype();
+	function Mx_delegate_email_ft() {
+		parent::__construct();
 	}
 
 	// --------------------------------------------------------------------
 
-	function display_field($data)
-	{
+	function display_field( $data ) {
 
-		if (!$this->settings[$this->prefix . 'list'])
-		{
+		if ( !$this->settings[$this->prefix . 'list'] ) {
 			return '';
 		}
 		;
@@ -124,14 +121,12 @@ class Mx_delegate_email_ft extends EE_Fieldtype
 		$name = '';
 		$email = '';
 		$responsible = '';
-		foreach (explode("\n", $this->settings[$this->prefix . 'list']) as $key => $val)
-		{
+		foreach ( explode( "\n", $this->settings[$this->prefix . 'list'] ) as $key => $val ) {
 			//   echo $key.'=>'.$val;
-			list($name, $email) = explode('|', $val);
+			list( $name, $email ) = explode( '|', $val );
 
 
-			if ($data == $email)
-			{
+			if ( $data == $email ) {
 				$responsible =  $name;
 
 			}
@@ -146,21 +141,18 @@ class Mx_delegate_email_ft extends EE_Fieldtype
 		}
 		//  $out .= '</ul>'; $entry_id exp_members
 
-		$entry_id = $this->EE->input->get('entry_id');
-		
-		if ($entry_id)
-		{
-			$result = $this->EE->db->query("SELECT en.author_id as author_id, mm.email as email, mm.screen_name  as name
+		$entry_id = $this->EE->input->get( 'entry_id' );
+
+		if ( $entry_id ) {
+			$result = $this->EE->db->query( "SELECT en.author_id as author_id, mm.email as email, mm.screen_name  as name
 									FROM  exp_channel_titles as en
 									LEFT JOIN exp_members as mm
 									ON  mm.member_id = en.author_id
-									WHERE  entry_id = '" . $entry_id . "'");
+									WHERE  entry_id = '" . $entry_id . "'" );
 
-			if ($result->num_rows() > 0)
-			{
-				$out .=  "<option value='".$result->row()->email."'".(($data == $result->row()->email) ? "select" : "").">Author: ".$result->row()->name."</option>";
-				if ($data == $result->row()->email)
-				{
+			if ( $result->num_rows() > 0 ) {
+				$out .=  "<option value='".$result->row()->email."'".( ( $data == $result->row()->email ) ? "select" : "" ).">Author: ".$result->row()->name."</option>";
+				if ( $data == $result->row()->email ) {
 					$responsible =  $result->row()->name;
 
 				}
@@ -174,27 +166,24 @@ class Mx_delegate_email_ft extends EE_Fieldtype
 		return $out;
 	}
 
-	function save($data)
-	{
-		if ($this->EE->input->get_post('mx_reassign_' . $this->field_name))
-		{
-			$data = $this->EE->input->get_post('mx_reassign_' . $this->field_name);
+	function save( $data ) {
+		if ( $this->EE->input->get_post( 'mx_reassign_' . $this->field_name ) ) {
+			$data = $this->EE->input->get_post( 'mx_reassign_' . $this->field_name );
 		}
 
 		return $data;
 	}
 
-	function display_settings($data)
-	{
-		$val = (isset($data[$this->prefix . 'list'])) ? $data[$this->prefix . 'list'] : '';
+	function display_settings( $data ) {
+		$val = ( isset( $data[$this->prefix . 'list'] ) ) ? $data[$this->prefix . 'list'] : '';
 
-		$this->EE->table->add_row($this->EE->lang->line('Persons <br/><span><i>(name | email)</i></span>'), form_textarea(array(
+		$this->EE->table->add_row( $this->EE->lang->line( 'Persons <br/><span><i>(name | email)</i></span>' ), form_textarea( array(
 					'id' => $this->prefix . 'list',
 					'name' => $this->prefix . 'list',
 					'size' => 4,
 					'value' => $val
 
-				)));
+				) ) );
 	}
 
 	// --------------------------------------------------------------------
@@ -207,8 +196,7 @@ class Mx_delegate_email_ft extends EE_Fieldtype
 	 *
 	 */
 
-	function save_settings($data)
-	{
+	function save_settings( $data ) {
 
 		return array(
 			$this->prefix . 'list' => $_POST[$this->prefix . 'list']
