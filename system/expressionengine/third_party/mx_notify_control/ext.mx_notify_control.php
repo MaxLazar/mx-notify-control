@@ -330,8 +330,6 @@ class Mx_notify_control_ext
 			{return false;}
 
 		$edata['entry_id'] = $edata['revision_post']['entry_id'] = $entry_id;
-		
-		error_log(print_r($site_settings, TRUE));
 
 		foreach ($site_settings['row_order'] as $key => $value)
 		{
