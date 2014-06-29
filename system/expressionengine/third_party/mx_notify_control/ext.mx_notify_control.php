@@ -330,13 +330,15 @@ class Mx_notify_control_ext
 			{return false;}
 
 		$edata['entry_id'] = $edata['revision_post']['entry_id'] = $entry_id;
+		
+		error_log(print_r($site_settings, TRUE));
 
 		foreach ($site_settings['row_order'] as $key => $value)
 		{
 			$iRow     = $value;
 			$group_id = false;
 
-			if ($site_settings["trigger_" . $iRow] == '5' and ($this->EE->input->get_post('entry_id') == 0) and (isset($site_settings['channel_' . $iRow][$meta['channel_id']])) and (isset($site_settings['channel_' . $iRow][$meta['channel_id'] . '_' . $meta['status']])))
+			if ($site_settings["trigger_" . $iRow] == '5' and ($this->EE->input->get_post('entry_id') == 0) and (isset($site_settings['channel_' . $iRow][$meta['channel_id']])) and (isset($site_settings['channel_' . $iRow][$meta['channel_id'] . '_' . str_replace(" ", "_", $meta['status'])])))
 			{
 
 				if ($site_settings["type_" . $iRow] == 'email')
@@ -346,7 +348,7 @@ class Mx_notify_control_ext
 				}
 			}
 
-			if ($site_settings["trigger_" . $iRow] == '6' and ($this->EE->input->get_post('entry_id') != 0) and (isset($site_settings['channel_' . $iRow][$meta['channel_id']])) and (isset($site_settings['channel_' . $iRow][$meta['channel_id'] . '_' . $meta['status']])))
+			if ($site_settings["trigger_" . $iRow] == '6' and ($this->EE->input->get_post('entry_id') != 0) and (isset($site_settings['channel_' . $iRow][$meta['channel_id']])) and (isset($site_settings['channel_' . $iRow][$meta['channel_id'] . '_' . str_replace(" ", "_", $meta['status'])])))
 			{
 
 
