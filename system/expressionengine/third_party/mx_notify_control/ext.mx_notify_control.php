@@ -983,11 +983,12 @@ class Mx_notify_control_ext
 		{
 			foreach ($emailTo as $key => $val)
 			{
+				$this->EE->email->initialize();
+				$this->EE->email->from($site_settings['email_' . $iRow] != '' ? $site_settings['email_' . $iRow] :  $this->EE->config->item('webmaster_email'), ($site_settings['from_' . $iRow] != '') ? $site_settings['from_' . $iRow] : $this->EE->config->item('webmaster_name'));
 				$this->EE->email->to($val['mbr_email']);
 				$this->EE->email->subject($this->templater($email_sabj_tmp, $val));
 				$this->EE->email->message(entities_to_ascii($this->templater($msg_body_tmp, $val)), (($plaintext_alt_tmp != '') ? $this->templater($plaintext_alt_tmp, $val) : ''));
 				$this->EE->email->Send();
-
 			}
 		}
 
