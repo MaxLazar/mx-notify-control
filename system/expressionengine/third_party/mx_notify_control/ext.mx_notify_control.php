@@ -53,11 +53,6 @@ class Mx_notify_control_ext
 	// -------------------------------
 	// Constructor
 	// -------------------------------
-	function Mx_notify_control_ext($settings = '')
-	{
-		$this->EE =& get_instance();
-		$this->settings = $settings;
-	}
 
 	public function __construct($settings = FALSE)
 	{
