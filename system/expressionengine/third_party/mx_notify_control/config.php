@@ -2,7 +2,7 @@
 if (! defined('MX_NOTIFY_CONTROL_KEY'))
 {
 	define('MX_NOTIFY_CONTROL_NAME', 'MX Notify Control');
-	define('MX_NOTIFY_CONTROL_VER',  '2.4.6');
+	define('MX_NOTIFY_CONTROL_VER',  '2.4.7');
 	define('MX_NOTIFY_CONTROL_KEY', 'mx_notify_control');
 	define('MX_NOTIFY_CONTROL_AUTHOR',  'Max Lazar');
 	define('MX_NOTIFY_CONTROL_DOCS',  'http://www.eec.ms/add-on/mx-notify-control');
