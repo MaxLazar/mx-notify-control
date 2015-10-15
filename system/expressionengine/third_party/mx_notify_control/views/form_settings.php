@@ -333,7 +333,7 @@ $out = '
 		if (isset($statuses[$channel->status_group])) {
 			foreach ($statuses[$channel->status_group] as $status)
 			{
-				$details = array('name' =>$input_prefix.'[channel_'.$row_ids.']['.$channel->channel_id.'_'.$status['status'].']', 'value' => $status['status'], 'checked' => ((isset($settings['channel_'.$row_id][$channel->channel_id.'_'.$status['status']])) ? true : false));
+				$details = array('name' =>$input_prefix.'[channel_'.$row_ids.']['.$channel->channel_id.'_'.str_replace(" ", "_", $status['status']).']', 'value' => $status['status_id'], 'checked' => ((isset($settings['channel_'.$row_id][$channel->channel_id.'_'.str_replace(" ", "_", $status['status'])])) ? true : false));
 				$out  .=  '<li><label>'.form_checkbox($details).' &nbsp;'.$status['status'].'</label></li>';
 			}
 		}
