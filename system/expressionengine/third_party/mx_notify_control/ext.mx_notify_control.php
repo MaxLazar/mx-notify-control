@@ -806,6 +806,7 @@ class Mx_notify_control_ext
 
 		$email_sabj_tmp = $this->templater($site_settings['title_' . $iRow], $msg_data);
 
+		$mbr_data = array_merge($_POST,$mbr_data); // merge extra fields from form such as custom fields
 		$msg_body_tmp = $this->template_parser($msg_data, $iRow, $site_settings['tempale_' . $iRow]);
 
 		$this->EE->load->helper('text');
